@@ -5,17 +5,13 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.FrameLayout
-import android.widget.ProgressBar
 
 class MainActivity : Activity() {
     private lateinit var webView: WebView
-    private lateinit var progress: ProgressBar
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,8 +19,8 @@ class MainActivity : Activity() {
         window.statusBarColor = Color.rgb(12, 18, 62)
         window.navigationBarColor = Color.rgb(8, 12, 38)
 
-        val root = FrameLayout(this).apply { setBackgroundColor(Color.rgb(12, 18, 62)) }
         webView = WebView(this).apply {
+            setBackgroundColor(Color.rgb(12, 18, 62))
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
             settings.mediaPlaybackRequiresUserGesture = true
@@ -42,21 +38,9 @@ class MainActivity : Activity() {
                         true
                     } catch (_: Exception) { true }
                 }
-                override fun onPageFinished(view: WebView, url: String) {
-                    progress.setVisibility(View.GONE)
-                }
             }
         }
-        progress = ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal).apply {
-            isIndeterminate = true
-        }
-        root.addView(webView, FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
-        ))
-        root.addView(progress, FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT, 6
-        ))
-        setContentView(root)
+        setContentView(webView)
 
         if (savedInstanceState == null) {
             webView.loadUrl("https://ssazafm998.github.io/ssaza-radio-app/")

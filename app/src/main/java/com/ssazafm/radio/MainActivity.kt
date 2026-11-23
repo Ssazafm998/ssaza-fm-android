@@ -43,7 +43,7 @@ class MainActivity : Activity() {
                     } catch (_: Exception) { true }
                 }
                 override fun onPageFinished(view: WebView, url: String) {
-                    progress.visibility = View.GONE
+                    progress.setVisibility(View.GONE)
                 }
             }
         }
